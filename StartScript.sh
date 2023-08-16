@@ -1,6 +1,26 @@
 #cloud-config
 package_update: true
 package_upgrade: true
+
+# Create docker-compose.yml file
+write_files:
+- path: /mnt/efs/docker-compose.yml
+  content: |
+    version: '3.8'
+
+    services:
+      wordpress:
+        image: wordpress:latest
+        volumes:
+          - /mnt/efs/wordpress:/var/www/html
+        ports:
+          - "80:80"
+        environment:
+          WORDPRESS_DB_HOST: <RDS End point>
+          WORDPRESS_DB_USER: <RDS Master Username>
+          WORDPRESS_DB_PASSWORD: <Master Password>
+          WORDPRESS_DB_NAME: <RDS name, selected in additional settings>
+
 runcmd:
 # update the opearational system
 - yum update -y
@@ -24,8 +44,8 @@ runcmd:
 - yum install -y amazon-efs-utils
 # Install NFS utilities for Amazon EFS
 - yum install -y nfs-utils
-# Configure EFS, replace <DNS_NAME_DO_EFS> with your EFS
-- file_system_id_1=<DNS_NAME_DO_EFS>
+# Configure EFS, replace <EFS DNS NAME> with your EFS
+- file_system_id_1=<EFS DNS NAME>
 # Set the mount point
 - efs_mount_point_1=/mnt/efs
 # Create a directory for EFS mount point
@@ -36,3 +56,5 @@ runcmd:
 - test -f "/sbin/mount.efs" && grep -ozP 'client-info]\nsource' '/etc/amazon/efs/efs-utils.conf'; if [[ $? == 1 ]]; then printf "\n[client-info]\nsource=liw\n" >> /etc/amazon/efs/efs-utils.conf; fi;
 # Attempt to mount EFS with retries
 - retryCnt=15; waitTime=30; while true; do mount -a -t efs,nfs4 defaults; if [ $? = 0 ] || [ $retryCnt -lt 1 ]; then echo File system mounted successfully; break; fi; echo File system not available, retrying to mount.; ((retryCnt--)); sleep $waitTime; done;
+# Execute docker-compose
+- docker-compose -f /mnt/efs/docker-compose.yml up -d

@@ -51,16 +51,16 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 ### Criando uma VPC
 - Na AWS busque por VPC.
 
-![VPC_APP](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/Assets/VPC_APP.png)
+![VPC_APP](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/VPC_APP.png)
 
 - No menu de VPC clique em `Criar VPC`.
 
-- Para instruções detalhadas podem ser encotradas [Aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-vpc)
+- Instruções detalhadas de como criar uma VPC podem ser encontradas [Aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-vpc)
 
 ### Criando Securitys Groups
 - No menu EC2 procure por SecurityGroup na barra de navegação à esquerda.
 
-![SC_BARRA](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/Assets/SC_BARRA.png)
+![SC_BARRA](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/SC_BARRA.png)
 
 - Acesse e clique em `Criar novo grupo de segurança`, e crie os grupos de segurança a seguir.
 
@@ -87,27 +87,45 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 ### Criando um EFS
 - Busque por EFS na Amazon AWS o serviço de arquivos de NFS escalável da AWS.
 
-![EFS_APP](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/Assets/EFS_APP.png)
+![EFS_APP](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/EFS_APP.png)
 
 - Na Página de EFS clique em `Criar sistema de arquivos`.
 
 - Instruções detalhadas sobre a criação de um EFS podem ser encontradas [aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-um-efsnsf-server),  onde estão disponíveis orientações específicas. Certifique-se de utilizar o security group que foi criado anteriormente para assegurar as configurações de segurança. 
 
 ### Criando o RDS
+- Busque por EDS na Amazon AWS.
 
+![RDS_APP](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/RDS_APP.png)
 
-### Criando uma Instancia EC2
+- Na Pagina de RDS clique em `Criar banco de dados`
 
-- Acesse o console da AWS e navegue até a seção EC2 para dar início ao processo de criação da instância. Você pode encontrar instruções detalhadas sobre como executar essa etapa neste [link](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-instancia-ec2-na-aws),  onde estão disponíveis orientações específicas. Certifique-se de utilizar o security group que foi criado anteriormente para assegurar as configurações de segurança. 
-//checar essa ultima frase
-- Após concluir o processo de criação da instância, no campo de user data, insira o seguinte shell script:
+## falta coisa
 
-shellscript
+### Modelo de execução
+- No menu EC2 procure por Modelo de execução na barra de navegação à esquerda.
 
+![MD_BARRA](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/MD_BARRA.png)
 
-### Configurando Docker Compose
+- Acesse e clique em `Criar modelo de execução`.
 
-### IAM
+- Nomeie o modelo de execução, e opcionalmente de ao modelo uma descrição.
+
+- Em `Imagens de aplicação e de sistema operacional` selecione Amazon Linux 2.
+
+- Na aba `Tipo de instância` selecione t2.micro.
+
+- Selecione uma chave existente ou crie uma nova em `Par de chaves`.
+
+- Em `Configurações de rede` não inclua uma sub-rede no modelo, e selecione o grupo de segurança criado anteriormente. 
+
+- Na aba `Armazenamento` selecione 8GiB de gp2.
+
+- Adicione as tags necessarias a suas instancia em `Tags de recurso`,
+
+- Em `Detalhes acançados` copie para `Dados do usúario` o [Script](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/StartScript.sh) e altere as variaveis necessarias que estão marcadas por <>.
+
+- Ao terminar de alterar o StartScript clique em `Criar modelo de execução`.
 
 ### Auto Scaling
 
