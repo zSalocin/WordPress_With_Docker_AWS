@@ -12,14 +12,14 @@ Repositório para a atividade de Docker, do programa de bolsas da Compass UOL.
 Geração de uma chave pública SSH para estabelecer acesso seguro às instâncias.
 
 - Criação da Infraestrutura:
-Criação de instâncias EC2, baseadas na imagem do Amazon Linux 2, destinadas a hospedar a aplicação WordPress.
+Criação de instâncias EC2, baseadas na imagem do Amazon Linux 2, destinadas a hospedar a aplicação.
 Configuração de grupos de segurança a fim de permitir comunicações HTTP/HTTPS e SSH.
-Associação de um endereço IP elástico a cada instância, garantindo um ponto de acesso estável.
+Implementação de um grupo de Auto Scaling para gerenciar as instâncias de acordo com a demanda.
 Implementação de um Load Balancer para distribuir o tráfego entre as instâncias EC2.
 
 - Configuração do Sistema de Arquivos EFS:
-Estabelecimento de um sistema de arquivos EFS, dedicado ao armazenamento dos recursos estáticos do WordPress.
-Montagem do sistema de arquivos EFS nas instâncias EC2, viabilizando o compartilhamento dos recursos entre as instâncias.
+Estabelecimento de um sistema de arquivos EFS dedicado ao armazenamento dos recursos estáticos.
+Montagem do sistema de arquivos EFS nas instâncias EC2, viabilizando o compartilhamento dos recursos entre elas.
 
 - Configuração do Docker Compose para WordPress:
 Desenvolvimento de um arquivo docker-compose.yml, utilizado para definir e configurar o ambiente do WordPress.
@@ -29,16 +29,15 @@ Adequação do Docker Compose para integrar os recursos estáticos do sistema de
 Configuração de uma instância no Amazon RDS, destinada a armazenar e gerenciar os dados essenciais para o funcionamento do WordPress.
 Ajuste das configurações do WordPress para permitir a conexão e interação com o banco de dados do Amazon RDS.
 
-- Automação e Monitoramento:
+- Automação:
 Desenvolvimento de um script de inicialização, com o propósito de montar automaticamente o sistema de arquivos EFS.
-Configuração de um sistema de monitoramento capaz de identificar e alertar sobre possíveis falhas nas instâncias EC2.
-Implementação de um script de validação para verificar continuamente a disponibilidade do serviço WordPress, emitindo alertas no caso de indisponibilidade.
+Configuração do Auto Scaling para inicializar e encerrar instâncias conforme a demanda.
 
 - Documentação:
 Elaboração de um guia de instruções detalhado, descrevendo passo a passo a configuração e implantação do ambiente WordPress.
 Documentação clara e abrangente das etapas relevantes para a monitorização e solução de eventuais problemas que possam surgir no ambiente.
 
-O projeto, ao cumprir esse escopo, assegurará um ambiente altamente confiável e escalável, capaz de hospedar um site WordPress, com recursos estáticos armazenados de forma eficiente e gestão dos dados garantida pelo Amazon RDS. O Load Balancer contribuirá para a distribuição equilibrada do tráfego, enquanto a automação e monitorização colaborarão para a manutenção da disponibilidade do serviço.
+- O projeto, ao cumprir esse escopo, assegurará um ambiente altamente confiável e escalável, capaz de hospedar um site WordPress, com recursos estáticos armazenados de forma eficiente e gestão dos dados garantida pelo Amazon RDS. O Load Balancer contribuirá para a distribuição equilibrada do tráfego, enquanto a automação e o Auto Scaling colaborarão para a manutenção da disponibilidade do serviço.
 
 **Arquitetura do Projeto**:
 
@@ -59,6 +58,14 @@ O projeto, ao cumprir esse escopo, assegurará um ambiente altamente confiável 
 - Para instruções detalhadas podem ser encotradas [Aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-vpc)
 
 ### Criando Securitys Groups
+- No menu EC2 procure por SecurityGroup na barra de navegação à esquerda.
+
+![SC_BARRA](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/Assets/SC_BARRA.png)
+
+- Acesse e clique em `Criar novo grupo de segurança`, e crie os grupos de segurança a seguir.
+
+- Instruções detalhadas de como criar um grupo de segurança podem ser encontradas [aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-um-securitygroup)
+
 #### EFS
 | Tipo | Protocolo | Intervalo de portas | Origem | Descrição |
 | ---|---|---|---|--- |
@@ -78,8 +85,13 @@ O projeto, ao cumprir esse escopo, assegurará um ambiente altamente confiável 
 | TCP personalizado | TCP | 3306 | 0.0.0.0/0 | RDS |
 
 ### Criando um EFS
+- Busque por EFS na Amazon AWS o serviço de arquivos de NFS escalável da AWS.
 
-- Acesse o console da AWS e navegue até a seção EFS para dar início ao processo de criação do Elastic File System. Você pode encontrar instruções detalhadas sobre como executar essa etapa neste [link](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-um-efsnsf-server),  onde estão disponíveis orientações específicas. Certifique-se de utilizar o security group que foi criado anteriormente para assegurar as configurações de segurança. 
+![EFS_APP](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/Assets/EFS_APP.png)
+
+- Na Página de EFS clique em `Criar sistema de arquivos`.
+
+- Instruções detalhadas sobre a criação de um EFS podem ser encontradas [aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-um-efsnsf-server),  onde estão disponíveis orientações específicas. Certifique-se de utilizar o security group que foi criado anteriormente para assegurar as configurações de segurança. 
 
 ### Criando o RDS
 
