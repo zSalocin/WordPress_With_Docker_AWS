@@ -40,4 +40,8 @@ Provide clear and comprehensive documentation of the relevant steps for monitori
 
 By fulfilling this scope, the project will ensure a highly reliable and scalable environment capable of hosting a WordPress site, with static resources efficiently stored and data management ensured by Amazon RDS. The Load Balancer will contribute to balanced traffic distribution, while automation and monitoring will aid in maintaining service availability.
 
-**Referências**: [Amazon Web Services Documentation](https://docs.aws.amazon.com/pt_br/index.html), [Amazon Linux 2 Documentation](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/amazon-linux-2-virtual-machine.html), [Docker Documentation](), [Docker-Compose Documentation.]().
+**Project Architecture**:
+
+![PROJECT_ARCHITECTURE](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/PROJECT_ARCHITECTURE.png)
+
+**References**: [Amazon Web Services Documentation](https://docs.aws.amazon.com/pt_br/index.html), [Amazon Linux 2 Documentation](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/amazon-linux-2-virtual-machine.html), [Docker Documentation](https://docs.docker.com/), [Docker-Compose Documentation.](https://docs.docker.com/compose/).

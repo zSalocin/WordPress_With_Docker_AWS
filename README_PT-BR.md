@@ -40,6 +40,63 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 O projeto, ao cumprir esse escopo, assegurará um ambiente altamente confiável e escalável, capaz de hospedar um site WordPress, com recursos estáticos armazenados de forma eficiente e gestão dos dados garantida pelo Amazon RDS. O Load Balancer contribuirá para a distribuição equilibrada do tráfego, enquanto a automação e monitorização colaborarão para a manutenção da disponibilidade do serviço.
 
-**Referências**: [Documentação da Amazon Web Services](https://docs.aws.amazon.com/pt_br/index.html), [Documentação do Amazon Linux 2](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/amazon-linux-2-virtual-machine.html), [Documentação do Docker](), [Documentação do Docker-Compose]().
+**Arquitetura do Projeto**:
+
+![PROJECT_ARCHITECTURE](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/PROJECT_ARCHITECTURE.png)
+
+**Referências**: [Documentação da Amazon Web Services](https://docs.aws.amazon.com/pt_br/index.html), [Documentação do Amazon Linux 2](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/amazon-linux-2-virtual-machine.html), [Documentação do Docker](https://docs.docker.com/), [Documentação do Docker-Compose](https://docs.docker.com/compose/).
 
 ---
+## Passo a Passo
+
+### Criando uma VPC
+- Na AWS busque por VPC.
+
+![VPC_APP](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/Assets/VPC_APP.png)
+
+- No menu de VPC clique em `Criar VPC`.
+
+- Para instruções detalhadas podem ser encotradas [Aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-vpc)
+
+### Criando Securitys Groups
+#### EFS
+| Tipo | Protocolo | Intervalo de portas | Origem | Descrição |
+| ---|---|---|---|--- |
+| TCP personalizado | TCP | 2049 | 0.0.0.0/0 | NFS |
+| UDP personalizado | UDP | 2049 | 0.0.0.0/0 | NFS |
+
+#### EC2
+| Tipo | Protocolo | Intervalo de portas | Origem | Descrição |
+| ---|---|---|---|--- |
+| SSH | TCP | 22 | 0.0.0.0/0 | SSH |
+| TCP personalizado | TCP | 80 | 0.0.0.0/0 | HTTP |
+| TCP personalizado | TCP | 443 | 0.0.0.0/0 | HTTPS |
+
+#### RDS
+| Tipo | Protocolo | Intervalo de portas | Origem | Descrição |
+| ---|---|---|---|--- |
+| TCP personalizado | TCP | 3306 | 0.0.0.0/0 | RDS |
+
+### Criando um EFS
+
+- Acesse o console da AWS e navegue até a seção EFS para dar início ao processo de criação do Elastic File System. Você pode encontrar instruções detalhadas sobre como executar essa etapa neste [link](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-um-efsnsf-server),  onde estão disponíveis orientações específicas. Certifique-se de utilizar o security group que foi criado anteriormente para assegurar as configurações de segurança. 
+
+### Criando o RDS
+
+
+### Criando uma Instancia EC2
+
+- Acesse o console da AWS e navegue até a seção EC2 para dar início ao processo de criação da instância. Você pode encontrar instruções detalhadas sobre como executar essa etapa neste [link](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-instancia-ec2-na-aws),  onde estão disponíveis orientações específicas. Certifique-se de utilizar o security group que foi criado anteriormente para assegurar as configurações de segurança. 
+//checar essa ultima frase
+- Após concluir o processo de criação da instância, no campo de user data, insira o seguinte shell script:
+
+shellscript
+
+
+### Configurando Docker Compose
+
+### IAM
+
+### Auto Scaling
+
+### Configurando Load Balancer
