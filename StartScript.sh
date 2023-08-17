@@ -1,8 +1,17 @@
+Content-Type: multipart/mixed; boundary="//"
+MIME-Version: 1.0
+
+--//
+Content-Type: text/cloud-config; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="cloud-config.txt"
+
 #cloud-config
 package_update: true
 package_upgrade: true
 runcmd:
-# update the opearational system
+# update the operational system
 - yum update -y
 # Install Docker
 - yum install docker -y
@@ -37,12 +46,14 @@ runcmd:
 # Attempt to mount EFS with retries
 - retryCnt=15; waitTime=30; while true; do mount -a -t efs,nfs4 defaults; if [ $? = 0 ] || [ $retryCnt -lt 1 ]; then echo File system mounted successfully; break; fi; echo File system not available, retrying to mount.; ((retryCnt--)); sleep $waitTime; done;
 
-# Create docker-compose.yml file
-write_files:
-- path: /mnt/efs/docker-compose.yml
-  content: |
-    version: '3.8'
+--//
+Content-Type: text/x-shellscript; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="userdata.txt"
 
+#!/bin/bash
+sudo echo "
     services:
       wordpress:
         image: wordpress:latest
@@ -51,10 +62,10 @@ write_files:
         ports:
           - "80:80"
         environment:
-          WORDPRESS_DB_HOST: "seu-host-do-rds-aqui"
-          WORDPRESS_DB_USER: "seu-usuario-do-banco"
-          WORDPRESS_DB_PASSWORD: "sua-senha-do-banco"
-          WORDPRESS_DB_NAME: "seu-nome-do-banco"
-
-# Execute docker-compose up -d
-- command: docker-compose -f /mnt/efs/docker-compose.yml up -d
+          WORDPRESS_DB_HOST: <RDS End point>
+          WORDPRESS_DB_USER: <RDS Master Username>
+          WORDPRESS_DB_PASSWORD: <Master Password>
+          WORDPRESS_DB_NAME: <RDS name, selected in additional settings>
+" > /mnt/efs/docker-compose.yml
+sudo docker-compose -f /mnt/efs/docker-compose.yml up -d
+--//--
