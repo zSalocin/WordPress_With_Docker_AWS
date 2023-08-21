@@ -49,7 +49,7 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 ## Passo a Passo
 
 ### Criando uma VPC
-- Na AWS busque por VPC.
+- Na AWS busque por `VPC`.
 
 ![VPC_APP](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/VPC_APP.png)
 
@@ -58,13 +58,13 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 - Instruções detalhadas de como criar uma VPC podem ser encontradas [Aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-vpc)
 
 ### Criando Securitys Groups
-- No menu EC2 procure por SecurityGroup na barra de navegação à esquerda.
+- No menu EC2 procure por `Security groups` na barra de navegação à esquerda.
 
 ![SC_BARRA](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/SC_BARRA.png)
 
 - Acesse e clique em `Criar novo grupo de segurança`, e crie os grupos de segurança a seguir.
 
-- Instruções detalhadas de como criar um grupo de segurança podem ser encontradas [aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-um-securitygroup)
+- Instruções detalhadas de como criar um grupo de segurança podem ser encontradas [Aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-um-securitygroup)
 
 #### EFS
 | Tipo | Protocolo | Intervalo de portas | Origem | Descrição |
@@ -85,7 +85,7 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 | TCP personalizado | TCP | 3306 | 0.0.0.0/0 | RDS |
 
 ### Criando um EFS
-- Busque por EFS na Amazon AWS o serviço de arquivos de NFS escalável da AWS.
+- Busque por `EFS` na Amazon AWS o serviço de arquivos de NFS escalável da AWS.
 
 ![EFS_APP](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/EFS_APP.png)
 
@@ -94,16 +94,16 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 - Instruções detalhadas sobre a criação de um EFS podem ser encontradas [aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-um-efsnsf-server),  onde estão disponíveis orientações específicas. Certifique-se de utilizar o security group que foi criado anteriormente para assegurar as configurações de segurança. 
 
 ### Criando o RDS
-- Busque por EDS na Amazon AWS.
+- Busque por RDS na Amazon AWS.
 
 ![RDS_APP](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/RDS_APP.png)
 
-- Na Pagina de RDS clique em `Criar banco de dados`
+- Na Pagina de RDS clique em `Criar banco de dados`.
 
 ## falta coisa
 
 ### Modelo de execução
-- No menu EC2 procure por Modelo de execução na barra de navegação à esquerda.
+- No menu EC2 procure por `Modelo de execução` na barra de navegação à esquerda.
 
 ![MD_BARRA](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/MD_BARRA.png)
 
@@ -121,12 +121,98 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 - Na aba `Armazenamento` selecione 8GiB de gp2.
 
-- Adicione as tags necessarias a suas instancia em `Tags de recurso`,
+- Adicione as tags necessarias a suas instancia em `Tags de recurso`.
 
 - Em `Detalhes acançados` copie para `Dados do usúario` o [Script](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/StartScript.sh) e altere as variaveis necessarias que estão marcadas por <>.
 
 - Ao terminar de alterar o StartScript clique em `Criar modelo de execução`.
 
-### Auto Scaling
+### Target Group
+- No menu EC2 procure por `Grupos de destino` na barra de navegação à esquerda.
 
-### Configurando Load Balancer
+![TG_BARRA](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/TG_BARRA.png)
+
+- Acesse e clique em `Criar grupo de destino`.
+
+- Em `Escolha um tipo de destino` clique em `Instâncias`.
+
+- Nomeie o grupo de destino.
+
+- Em `Protocolo` mantenha `HTTP` e em `Porta` mantenha a porta `80`.
+
+- Como `VPC` selecione a VPC criada anteriormente.
+
+- Mantenha a `Versão do protocolo` como `HTTP1`.
+
+- A seguir clique em `Próximo`.
+
+- Na pagina de `Registrar destinos` não selecione nenhuma instancia.
+
+- Selecione `Criar grupo de destino`.
+
+### Load Balancer
+- No menu EC2 procure por `load Balancer` na barra de navegação à esquerda.
+
+![LB_BARRA](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/LB_BARRA.png)
+
+- Acesse e clique em `Criar load balancer`.
+
+- Selecione `Criar` Application Load Balancer.
+
+- Nomeie o load balancer.
+
+- Em `Esquema` selecione `Voltado para a internet`.
+
+- Em `Tipo de endereço IP` mantenha `IPv4`.
+
+- Na aba `Mapeamento de rede` selecione a rede VPC.
+
+- Selecione as duas subnets publicas criadas anteriormente.
+
+![LB_VPC(https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/LB_VPC.png)
+
+- Como `Grupo de segurança` selecione o grupo criado anteriormente para EC2.
+
+- Em `Listeners e roteamento` mantenha `HTTP`:`80` e selecione o grupo de destino criado anteriormente.
+
+![LB_LISTENER(https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/LB_LISTENER.png)
+
+- Clique em `Criar load Balancer`.
+
+### Auto Scaling
+- No menu EC2 procure por `Auto Scaling` na barra de navegação à esquerda.
+
+![LB_BARRA](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/AU_BARRA.png)
+
+- Acesse e clique em `Criar grupo do Auto Scaling`.
+
+- Nomeio o grupo de Auto Scaling.
+
+- Selecione o modelo de execução criado anteriormente.
+
+- A seguir clique em `Próximo`.
+
+- Selecione a VPC criada anteriormente.
+
+- Selecione as Sub-redes Privadas.
+
+![LB_BARRA](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/AU_VPC.png)
+
+- A seguir clique em `Próximo`.
+
+- Marque a opção `Anexar a um balanceador de carga existente`.
+
+- Marque a opção `Escolha entre seus grupos de destino de balanceador de carga`.
+
+- Selecione o grupo de destino criado anteriormente.
+
+- A seguir clique em `Próximo`.
+
+- Em `Tamanho do grupo` selecione:
+-- Capacidade desejada: 1
+-- Capacidade mínima: 2
+-- Capacidade máxima: 3
+
+- A seguir clique em `Pular para a revisão`.
+
+- Clique em `Criar grupo de auto Scaling`.
