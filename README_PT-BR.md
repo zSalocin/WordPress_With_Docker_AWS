@@ -169,13 +169,13 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 - Selecione as duas subnets publicas criadas anteriormente.
 
-![LB_VPC(https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/LB_VPC.png)
+![LB_VPC](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/LB_VPC.png)
 
 - Como `Grupo de segurança` selecione o grupo criado anteriormente para EC2.
 
 - Em `Listeners e roteamento` mantenha `HTTP`:`80` e selecione o grupo de destino criado anteriormente.
 
-![LB_LISTENER(https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/LB_LISTENER.png)
+![LB_LISTENER](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/LB_LISTENER.png)
 
 - Clique em `Criar load Balancer`.
 
@@ -196,7 +196,7 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 - Selecione as Sub-redes Privadas.
 
-![LB_BARRA](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/AU_VPC.png)
+![LB_VPC](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/AU_VPC.png)
 
 - A seguir clique em `Próximo`.
 
@@ -209,9 +209,9 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 - A seguir clique em `Próximo`.
 
 - Em `Tamanho do grupo` selecione:
--- Capacidade desejada: 1
--- Capacidade mínima: 2
--- Capacidade máxima: 3
+    - Capacidade desejada: 1
+    - Capacidade mínima: 2
+    - Capacidade máxima: 3
 
 - A seguir clique em `Pular para a revisão`.
 
