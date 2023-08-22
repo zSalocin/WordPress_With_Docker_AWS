@@ -37,7 +37,7 @@ Configuração do Auto Scaling para inicializar e encerrar instâncias conforme 
 Elaboração de um guia de instruções detalhado, descrevendo passo a passo a configuração e implantação do ambiente WordPress.
 Documentação clara e abrangente das etapas relevantes para a monitorização e solução de eventuais problemas que possam surgir no ambiente.
 
-- O projeto, ao cumprir esse escopo, assegurará um ambiente altamente confiável e escalável, capaz de hospedar um site WordPress, com recursos estáticos armazenados de forma eficiente e gestão dos dados garantida pelo Amazon RDS. O Load Balancer contribuirá para a distribuição equilibrada do tráfego, enquanto a automação e o Auto Scaling colaborarão para a manutenção da disponibilidade do serviço.
+- O projeto, ao cumprir esse escopo, irá assegurar um ambiente altamente confiável e escalável, capaz de hospedar um site WordPress, com recursos estáticos armazenados de forma eficiente e gestão dos dados garantida pelo Amazon RDS. O Load Balancer contribuirá para a distribuição equilibrada do tráfego, enquanto a automação e o Auto Scaling colaborarão para a manutenção da disponibilidade do serviço.
 
 **Arquitetura do Projeto**:
 
@@ -56,6 +56,30 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 - No menu de VPC clique em `Criar VPC`.
 
 - Instruções detalhadas de como criar uma VPC podem ser encontradas [Aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-vpc)
+
+- Após criar a VPC ainda no menu vá até `Gateways NAT`.
+
+- Clique em `Criar gateway NAT`.
+
+- Nomeie o Nat Gateway e em `Sub-rede` selecione uma das sub-redes públicas.
+
+- Mantenha `Tipo de conectividade` como público.
+
+- Em seguida clique em `Criar gateway NAT`.
+
+- Após criar o NAT gateway, acesse `Tabelas de rotas`.
+
+- Na `Tabela de rotas` selecione as rotas privadas, clique em `Ações` e selecione `Editar rotas`, será necessário realizar isso para as duas rotas.
+
+- Em `Editar rotas` em `destino` selecione `0.0.0/0`
+
+- Em Alvo selecione `Gateway NAT` e selecione o NAT gateway criado anteriormente.
+
+- Clique em `Salvar alterações`.
+
+- Para verificar se sua VPC está correta acesse `Suas VPCs` em seguida selecione a VPC criada anteriormente e a opção `Resource map` e verifique se está de acordo com a imagem abaixo.
+
+![VPC_MAP](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/VPC_MAP.png)
 
 ### Criando Securitys Groups
 - No menu EC2 procure por `Security groups` na barra de navegação à esquerda.
@@ -98,9 +122,9 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 ![RDS_APP](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/RDS_APP.png)
 
-- Na pagina de RDS clique em `Criar banco de dados`.
+- Na página de RDS clique em `Criar banco de dados`.
 
-- Na pagina de `Criar banco de dados` selecione `Criação padrão`.
+- Na página de `Criar banco de dados` selecione `Criação padrão`.
 
 - Em `Opções do mecanismo` selecione `MySQL`.
 
@@ -108,19 +132,19 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 - Em `Modelos` selecione `Nível gratuito`.
 
-- Na aba `Configurações` prencha o `Nome do usuário principal` e a `Senha principal` que serao utilizados no Script.
+- Na aba `Configurações` preencha o `Nome do usuário principal` e a `Senha principal` que serão utilizados no Script.
 
 - Em `Configuração da instância` selecione como classe `db.t3.micro`.
 
-- Na aba `Armazenamento` desabilite a opcao `Habilitar escalabilidade automática do armazenamento`.
+- Na aba `Armazenamento` desabilite a opção `Habilitar escalabilidade automática do armazenamento`.
 
-- Na aba `Conectividade` selecione `Não se conectar a um recurso de computação do EC2` e selecione a VPC criada anteriomente em VPC.
+- Na aba `Conectividade` selecione `Não se conectar a um recurso de computação do EC2` e selecione a VPC criada anteriormente em VPC.
 
-- Na opcao `Acesso público` selecione sim.
+- Na opção `Acesso público` selecione sim.
 
-- Em `Grupo de segurança de VPC (firewall)` selecione o Security group cirado anteriormente para o RDS
+- Em `Grupo de segurança de VPC (firewall)` selecione o Security group criado anteriormente para o RDS
 
-- Na aba `Configuração adicional` prencha `Nome do banco de dados inicial` sera necessario para o Script.
+- Na aba `Configuração adicional` preencha `Nome do banco de dados inicial` será necessário para o Script.
 
 - Clique em `Criar banco de dados`
 
@@ -131,7 +155,7 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 - Acesse e clique em `Criar modelo de execução`.
 
-- Nomeie o modelo de execução, e opcionalmente de ao modelo uma descrição.
+- Nomeie o modelo de execução, e opcionalmente dê ao modelo uma descrição.
 
 - Em `Imagens de aplicação e de sistema operacional` selecione Amazon Linux 2.
 
@@ -143,9 +167,56 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 - Na aba `Armazenamento` selecione 8GiB de gp2.
 
-- Adicione as tags necessarias a suas instancia em `Tags de recurso`.
+- Adicione as tags necessárias a suas instância em `Tags de recurso`.
 
-- Em `Detalhes acançados` copie para `Dados do usúario` o [Script](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/StartScript.sh) e altere as variaveis necessarias que estão marcadas por <>.
+- A duas opções ao utilizar o Script, utilizar ele e criar o arquivo do docker-compose ou então criar o arquivo do docker-compose fora do Script.
+
+<details>
+<summary>Utilizar o Script para a criação do docker-compose</summary>
+
+- Em `Detalhes avançados` copie para `Dados do usúario` o Script que pode ser encontrado [Aqui](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/StartWithDockerCompose.sh) e altere as variaveis necessarias que estão marcadas por <>.
+
+</details>
+
+<details>
+<summary>Criar o docker-compose separadamente</summary>
+
+- Em `Detalhes avançados` copie para `Dados do usúario` o Script que pode ser encontrado [Aqui](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/StartWithoutDockerCompose.sh) e altere as variaveis necessarias que estão marcadas por <>.
+
+- Como o Script não criará o arquivo docker-compose necessário para inicialização dos contêineres será necessário alguns passo adicionais.
+
+- Será necessario criar e executar uma instancia EC2 conectada ao EFS criado anteriormente, instuções detalhadas podem ser encontradas [Aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-instancia-ec2-na-aws).
+
+- Acesse a instância e navegue até o diretório `/mnt/efs`.
+
+- Crie um arquivo através  do comando:
+
+```
+vi docker-compose.yml
+```
+
+- Copie ou digite para o arquivo o conteúdo a seguir, respeitando a formatação.
+
+```
+    services:
+      wordpress:
+        image: wordpress:latest
+        volumes:
+          - /mnt/efs/wordpress:/var/www/html
+        ports:
+          - "80:80"
+        environment:
+          WORDPRESS_DB_HOST: <RDS End point>
+          WORDPRESS_DB_USER: <RDS Master Username>
+          WORDPRESS_DB_PASSWORD: <Master Password>
+          WORDPRESS_DB_NAME: <RDS name, selected in additional settings>
+```
+
+- Altere as variáveis necessárias que estão marcadas com <>.
+
+- Siga os passos restantes até o fim do tutorial e uma vez que as instâncias estejam rodando delete a instância criada para a criação do arquivo docker-compose.
+
+</details>
 
 - Ao terminar de alterar o StartScript clique em `Criar modelo de execução`.
 
@@ -168,7 +239,7 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 - A seguir clique em `Próximo`.
 
-- Na pagina de `Registrar destinos` não selecione nenhuma instancia.
+- Na página de `Registrar destinos` não selecione nenhuma instância.
 
 - Selecione `Criar grupo de destino`.
 
@@ -189,7 +260,7 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 - Na aba `Mapeamento de rede` selecione a rede VPC.
 
-- Selecione as duas subnets publicas criadas anteriormente.
+- Selecione as duas subnets públicas criadas anteriormente.
 
 ![LB_VPC](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/LB_VPC.png)
 
