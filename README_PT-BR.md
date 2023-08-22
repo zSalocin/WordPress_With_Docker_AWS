@@ -98,9 +98,31 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 ![RDS_APP](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/RDS_APP.png)
 
-- Na Pagina de RDS clique em `Criar banco de dados`.
+- Na pagina de RDS clique em `Criar banco de dados`.
 
-## falta coisa
+- Na pagina de `Criar banco de dados` selecione `Criação padrão`.
+
+- Em `Opções do mecanismo` selecione `MySQL`.
+
+- Como `Versão do mecanismo` selecione `MySQL 8.0.33`.
+
+- Em `Modelos` selecione `Nível gratuito`.
+
+- Na aba `Configurações` prencha o `Nome do usuário principal` e a `Senha principal` que serao utilizados no Script.
+
+- Em `Configuração da instância` selecione como classe `db.t3.micro`.
+
+- Na aba `Armazenamento` desabilite a opcao `Habilitar escalabilidade automática do armazenamento`.
+
+- Na aba `Conectividade` selecione `Não se conectar a um recurso de computação do EC2` e selecione a VPC criada anteriomente em VPC.
+
+- Na opcao `Acesso público` selecione sim.
+
+- Em `Grupo de segurança de VPC (firewall)` selecione o Security group cirado anteriormente para o RDS
+
+- Na aba `Configuração adicional` prencha `Nome do banco de dados inicial` sera necessario para o Script.
+
+- Clique em `Criar banco de dados`
 
 ### Modelo de execução
 - No menu EC2 procure por `Modelo de execução` na barra de navegação à esquerda.
@@ -209,7 +231,7 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 - A seguir clique em `Próximo`.
 
 - Em `Tamanho do grupo` selecione:
-    - Capacidade desejada: 1
+    - Capacidade desejada: 2
     - Capacidade mínima: 2
     - Capacidade máxima: 3
 
