@@ -357,6 +357,7 @@ vi docker-compose.yml
 
 - Em `Conexão de instância do EC2` selecione `Conectar-se usando o endpoint do EC2 Instance Connect` e em `Endpoint do EC2 Instance Connect` selecione o EndPoint criado anteriormente e clique em `Conectar`.
 
+<details>
 <summary>Testar o docker</summary>
 
 - Verifique a execução de containers com o comando: 
@@ -381,6 +382,7 @@ docker-compose ls
 
 </details>
 
+<details>
 <summary>Verificar o Mount</summary>
 
 - Verifique se o EFS está montado com o comando:
@@ -407,6 +409,7 @@ cat fstab
 
 </details>
 
+<details>
 <summary>Verificar o Crontab</summary>
 
 - Verifique o crontab através do comando:
