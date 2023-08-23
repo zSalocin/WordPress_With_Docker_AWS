@@ -53,19 +53,28 @@ Content-Transfer-Encoding: 7bit
 Content-Disposition: attachment; filename="userdata.txt"
 
 #!/bin/bash
-sudo echo "
-    services:
-      wordpress:
-        image: wordpress:latest
-        volumes:
-          - /mnt/efs/wordpress:/var/www/html
-        ports:
-          - "80:80"
-        environment:
-          WORDPRESS_DB_HOST: <RDS End point>
-          WORDPRESS_DB_USER: <RDS Master Username>
-          WORDPRESS_DB_PASSWORD: <Master Password>
-          WORDPRESS_DB_NAME: <RDS name, selected in additional settings>
-" > /mnt/efs/docker-compose.yml
+if [ ! -f "/mnt/efs/docker-compose.yml" ]; then
+  sudo echo "
+      services:
+        wordpress:
+          image: wordpress:latest
+          volumes:
+            - /mnt/efs/wordpress:/var/www/html
+          ports:
+            - "80:80"
+          environment:
+            WORDPRESS_DB_HOST: <RDS End point>
+            WORDPRESS_DB_USER: <RDS Master Username>
+            WORDPRESS_DB_PASSWORD: <Master Password>
+            WORDPRESS_DB_NAME: <RDS name, selected in additional settings>
+  " > /mnt/efs/docker-compose.yml
+fi
+if [ ! -f "/mnt/efs/reboot.sh" ]; then
+  sudo echo "
+      sudo docker-compose -f /mnt/efs/docker-compose.yml up -d
+  " > /mnt/efs/reboot.sh
+  sudo chmod +rwx /mnt/efs/reboot.sh
+  echo "@reboot /mnt/efs/reboot.sh" | crontab -
+fi
 sudo docker-compose -f /mnt/efs/docker-compose.yml up -d
 --//--

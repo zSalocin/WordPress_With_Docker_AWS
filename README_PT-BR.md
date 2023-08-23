@@ -108,6 +108,10 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 | ---|---|---|---|--- |
 | TCP personalizado | TCP | 3306 | 0.0.0.0/0 | RDS |
 
+#### Endpoint
+
+Permita somente conexões out bound.
+
 ### Criando um EFS
 - Busque por `EFS` na Amazon AWS o serviço de arquivos de NFS escalável da AWS.
 
@@ -309,3 +313,108 @@ vi docker-compose.yml
 - A seguir clique em `Pular para a revisão`.
 
 - Clique em `Criar grupo de auto Scaling`.
+
+### Verificando funcionamento
+- No menu EC2 procure por `load Balancer` na barra de navegação à esquerda.
+
+- Selecione o Load Balancer criado anteriormente, copie o `Nome do DNS` e cole no navegador, se as instâncias do EC2 já estão rodando deve ser possível acessar o WordPress.
+
+![WP_LG](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/WP_LG.png)
+
+- Em seguida configure o WordPress.
+
+![WP_CR](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/WP_CR.png)
+
+- A partir daí é possível acessar e configurar o WordPress.
+
+- Cheque a integridade acesse `Grupos de destino`.
+
+- Selecione o Grupo de destino criado anteriormente e verifique se as instâncias estão íntegras.
+
+![GP_IN](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/GP_IN.png)
+
+- Para acessar as instâncias e verificá-las é necessário criar um EndPoint para isso busque por `VPC`.
+
+- No menu esquerdo selecione Endpoints.
+
+![VPC_END](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/VPC_END.png)
+
+- Clique em `Criar endpoint`.
+
+- Nomeie o Endpoint e em seguida selecione em `Categoria de serviço` a categoria `EC2 Instance Connect Endpoint`.
+
+- Em `VPC` selecione a VPC criada anteriormente.
+
+- Como `Grupos de segurança` selecione o grupo criado para EndPoint.
+
+- Em `Subnet` selecione uma das subnets privadas da VPC.
+
+- Clique em `Criar endpoint`.
+
+- Após o EndPoint ter sido criado navegue até a instância que deseja conectar.
+
+- Clique em `Conectar`.
+
+- Em `Conexão de instância do EC2` selecione `Conectar-se usando o endpoint do EC2 Instance Connect` e em `Endpoint do EC2 Instance Connect` selecione o EndPoint criado anteriormente e clique em `Conectar`.
+
+<summary>Testar o docker</summary>
+
+- Verifique a execução de containers com o comando: 
+
+```
+docker ps
+```
+
+![EC2_DC](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/EC2_DC.png)
+
+- Verifique a instalação do docker-compose com o comando:
+
+```
+docker-compose -v
+```
+
+- Verifique a config file com o comando:
+
+```
+docker-compose ls
+```
+
+</details>
+
+<summary>Verificar o Mount</summary>
+
+- Verifique se o EFS está montado com o comando:
+
+```
+df -h
+```
+
+![EC2_DF](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/EC2_DF.png)
+
+- Verifique a persistência do mount, acesse o diretório etc através do comando.
+
+```
+cd /etc
+```
+
+- leia o arquivo fstab com o comando.
+
+```
+cat fstab
+```
+
+![EC2_FS](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/EC2_FS.png)
+
+</details>
+
+<summary>Verificar o Crontab</summary>
+
+- Verifique o crontab através do comando:
+
+```
+crontab -l
+```
+
+![EC2_CR](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/EC2_CR.png)
+
+</details>

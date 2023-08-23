@@ -53,5 +53,12 @@ Content-Transfer-Encoding: 7bit
 Content-Disposition: attachment; filename="userdata.txt"
 
 #!/bin/bash
+if [ ! -f "/mnt/efs/reboot.sh" ]; then
+  sudo echo "
+      sudo docker-compose -f /mnt/efs/docker-compose.yml up -d
+  " > /mnt/efs/reboot.sh
+  sudo chmod +rwx /mnt/efs/reboot.sh
+  echo "@reboot /mnt/efs/reboot.sh" | crontab -
+fi
 sudo docker-compose -f /mnt/efs/docker-compose.yml up -d
 --//--
