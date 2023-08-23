@@ -55,7 +55,12 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 
 - No menu de VPC clique em `Criar VPC`.
 
+- Ao criar a VPC selecione para criar um NAT Gateway.
+
 - Instruções detalhadas de como criar uma VPC podem ser encontradas [Aqui](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-vpc)
+
+<details>
+<summary>Adicionar NAT Gateway após criar a VPC</summary>
 
 - Após criar a VPC ainda no menu vá até `Gateways NAT`.
 
@@ -76,6 +81,8 @@ Documentação clara e abrangente das etapas relevantes para a monitorização e
 - Em Alvo selecione `Gateway NAT` e selecione o NAT gateway criado anteriormente.
 
 - Clique em `Salvar alterações`.
+
+</details>
 
 - Para verificar se sua VPC está correta acesse `Suas VPCs` em seguida selecione a VPC criada anteriormente e a opção `Resource map` e verifique se está de acordo com a imagem abaixo.
 
