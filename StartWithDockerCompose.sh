@@ -67,6 +67,7 @@ if [ ! -f "/mnt/efs/docker-compose.yml" ]; then
             WORDPRESS_DB_USER: <RDS Master Username>
             WORDPRESS_DB_PASSWORD: <Master Password>
             WORDPRESS_DB_NAME: <RDS name, selected in additional settings>
+            WORDPRESS_TABLE_CONFIG: wp_
   " > /mnt/efs/docker-compose.yml
 fi
 if [ ! -f "/mnt/efs/reboot.sh" ]; then

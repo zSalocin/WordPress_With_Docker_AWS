@@ -221,6 +221,7 @@ vi docker-compose.yml
           WORDPRESS_DB_USER: <RDS Master Username>
           WORDPRESS_DB_PASSWORD: <Master Password>
           WORDPRESS_DB_NAME: <RDS name, selected in additional settings>
+          WORDPRESS_TABLE_CONFIG: wp_
 ```
 
 - Altere as variáveis necessárias que estão marcadas com <>.
@@ -290,7 +291,7 @@ vi docker-compose.yml
 
 - Acesse e clique em `Criar grupo do Auto Scaling`.
 
-- Nomeio o grupo de Auto Scaling.
+- Nomeie o grupo de Auto Scaling.
 
 - Selecione o modelo de execução criado anteriormente.
 
@@ -386,6 +387,45 @@ docker-compose -v
 ```
 docker-compose ls
 ```
+
+</details>
+
+<details>
+<summary>Testar DataBase</summary>
+
+- Acesse o Container em execução através do comando:
+
+```
+docker exec -it <ID_DO_CONTAINER_WORDPRESS> /bin/bash
+```
+
+- O `<ID_DO_CONTAINER_WORDPRESS>` pode-ser encontrado utilizando o comando:
+
+```
+docker ps
+```
+
+- Dentro do Container execute o comando abaixo para atualizar o sistema:
+
+```
+apt-get update
+```
+
+- Após a atualização do sistema é necessário instalar a biblioteca de cliente do mysql:
+
+```
+apt-get install default-mysql-client -y
+```
+
+- Agora use o comando abaixo para entrar no banco de dados MySQL:
+
+```
+mysql -h <ENDPOINT_DO_SEU_RDS> -P 3306 -u admin -p
+```
+
+- O `<ENDPOINT_DO_SEU_RDS>` e o mesmo utilizado no Script que pode-ser encontrado em detalhes após a criação do Database.
+
+![DC_DB](https://github.com/zSalocin/WordPress_With_Docker_AWS/blob/main/Assets/DC_DB.png)
 
 </details>
 
