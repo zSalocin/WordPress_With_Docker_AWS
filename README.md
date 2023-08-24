@@ -56,7 +56,7 @@ By fulfilling this scope, the project will ensure a highly reliable and scalable
 
 - When creating the VPC, select to create a NAT Gateway.
 
-- Detailed instructions on how to create a VPC can be found [Here](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-vpc)
+- Detailed instructions on how to create a VPC can be found [Here](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README.md#creating-a-vpc)
 
 <details>
 <summary>Add NAT Gateway after creating the VPC</summary>
@@ -94,7 +94,7 @@ To verify if your VPC is correct, access `Your VPCs`, then select the previously
 
 - Access it and click on `Create security group`, and create the following security groups.
 
-- Detailed instructions on how to create a security group can be found [Here](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-um-securitygroup)
+- Detailed instructions on how to create a security group can be found [Here](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README.md#creating-a-security-group)
 
 #### EFS
 | Type | Protocol | Port Range | Source | Description |
@@ -125,7 +125,7 @@ To verify if your VPC is correct, access `Your VPCs`, then select the previously
 
 - On the EFS page, click on `Create file system`.
 
-- Detailed instructions on how to create an EFS can be found  [Here](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-um-efsnsf-server), which provides specific guidance. Make sure to use the security group that was created earlier to ensure security settings.
+- Detailed instructions on how to create an EFS can be found  [Here](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README.md#criando-um-efsnsf-server), which provides specific guidance. Make sure to use the security group that was created earlier to ensure security settings.
 
 ### Creating RDS
 - Search for RDS in Amazon AWS.
@@ -195,7 +195,7 @@ To verify if your VPC is correct, access `Your VPCs`, then select the previously
 
 - Since the Script won't create the necessary docker-compose file for container initialization, you'll need some additional steps.
 
-- You'll need to create and launch an EC2 instance connected to the previously created EFS. Detailed instructions can be found [Here](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README_PT-BR.md#criando-uma-instancia-ec2-na-aws).
+- You'll need to create and launch an EC2 instance connected to the previously created EFS. Detailed instructions can be found [Here](https://github.com/zSalocin/ApacheServer_NFS_Script_in_AWS_EC2/blob/main/README.md#criando-uma-instancia-ec2-na-aws).
 
 - Access the instance and navigate to the `/mnt/efs` directory..
 
